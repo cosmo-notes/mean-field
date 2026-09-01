@@ -1,0 +1,538 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Compartmental models &#8212; Mean-Field</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/mf_definitions';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Writing discrete models" href="discrete_models.html" />
+    <link rel="prev" title="Mean-field approximations and compartmental models" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Mean-Field - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Mean-Field - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mean-field 101</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Compartmental models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discrete_models.html">Writing discrete models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="odes.html">Writing differential equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical_integration.html">Numerical integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulations.html">Stochastic simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stability.html">Stability analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaos.html">Chaos</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lotka_volterra.html">Lotka-Volterra system</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/cosmos-books/tame/main?urlpath=lab/tree/chapters/mf_definitions.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/cosmos-books/tame" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/mf_definitions.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Compartmental models</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling-recipe">Modeling recipe</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-from-epidemiological-models">Examples from epidemiological models</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="compartmental-models">
+<h1>Compartmental models<a class="headerlink" href="#compartmental-models" title="Link to this heading">#</a></h1>
+<p>In this tutorial, we hope to describe the expected evolution of a system by breaking it down into its relevant parts (or subsystems), the states they can take and the mechanisms that govern possible state transitions. By definition, complex systems are often composed of interacting agents or parts, whose behavior and dynamics are inseparable.  <a class="reference external" href="https://en.wikipedia.org/wiki/Multi-compartment_model"><strong>Compartmental models</strong></a> provide a systematic way to map the dynamics of these systems. We here propose a simple definition for this modeling techniques and a simple recipe for model building.</p>
+<p>Compartmental models are drawn using boxes and arrows. Boxes are compartments in which we can put agents or parts of our system when we judge them to be indistinguishable. And arrows will describe the mechanisms through which things can flow from one compartment to another based on the mechanistic rules of the system.</p>
+<p>Consider a really simple system where we are interested in people entering and leaving a building. The relevant agents of our system are people, and we might only want to count those that are in the building and consider them all indistinguishable. We can therefore have a single compartment (representing the state of being in the building) and assume that all people therein are identical: They follow the exact same rules and leave the building at the exact same rate. We assign a dynamic variable <span class="math notranslate nohighlight">\(N(t)\)</span> representing the <em>expected</em> number of agents in the compartment at time <span class="math notranslate nohighlight">\(t\)</span>. And two mechanisms can then influence <span class="math notranslate nohighlight">\(N(t)\)</span>: New agents can enter the building at rate <span class="math notranslate nohighlight">\(\alpha\)</span> and each agent in the building can leave at rate <span class="math notranslate nohighlight">\(\beta\)</span>. This compartmental model can therefore be drawn as:</p>
+<p><img alt="compartment_schematic1" src="../_images/schematic1.png" /></p>
+<p>The above compartmental model represents an <em>open population</em> since there are arrows flowing out and into a void. That void represents a part of the real system that we are not explicitly modeling, here the outside of the building. Note that, in general, we will also omit the time dependency and simply write <span class="math notranslate nohighlight">\(N(t)\)</span>, assuming that all compartments can vary in time. Importantly, we said the rate at which agents is fixed at <span class="math notranslate nohighlight">\(\alpha\)</span> (an expected number of new agents over some time period) but the rate at which agent leave the building is applied to each agent independently such that the total exit rate is equal to <span class="math notranslate nohighlight">\(\beta N(t)\)</span>. If we have ten times more agents in the building, the total exit rate is ten times higher; and if we have zero agent in the building, the total exit rate is zero.</p>
+<p>If we wanted to explicitly model a <em>closed population</em> whose size is conserved in time, we would need a system of compartments with no arrows connecting to the void. We could for example add a compartment for agents outside the building, thereby adding a second dynamical variable <span class="math notranslate nohighlight">\(E(t)\)</span> for the exterior world.</p>
+<p><img alt="compartment_schematic2" src="../_images/schematic2.png" /></p>
+<p>Finally, compartments can also act upon themselves. Imagine for instance that the building is actually a cloning factory where any of the <span class="math notranslate nohighlight">\(N(t)\)</span> agents expected to be in the building at time <span class="math notranslate nohighlight">\(t\)</span> can choose to clone themselves at a rate <span class="math notranslate nohighlight">\(\gamma\)</span>. The agents do not leave the building but new ones simply appear and the population grows! This type of feedback mechanism can be represented with a self-loop like so:</p>
+<p><img alt="compartment_schematic3" src="../_images/schematic3.png" /></p>
+<p>The possibilities are endless! There are an infinite amount of models we could specify with this technique. Across <span class="math notranslate nohighlight">\(n\)</span> compartments, there are potentially <span class="math notranslate nohighlight">\(n(n-1)\)</span> arrows between boxes, <span class="math notranslate nohighlight">\(n\)</span> self-loops, and <span class="math notranslate nohighlight">\(2n\)</span> ways to open the system. That’s <span class="math notranslate nohighlight">\(2^{n^2+2n}\)</span> possible model structures, since every mechanism can be turned on or off. That’s over 30,000 structures even with <span class="math notranslate nohighlight">\(n=3\)</span> and that’s ignoring the different ways we could specify the transition rates on each arrow.</p>
+<p>Instead of exploring the space of compartmental model blindly, we therefore propose a simple recipe.</p>
+<section id="modeling-recipe">
+<h2>Modeling recipe<a class="headerlink" href="#modeling-recipe" title="Link to this heading">#</a></h2>
+<p>In general, we can identify the important states and mechanisms of a system by answering a simple list of questions.</p>
+<p><em>i. What are the key agents of the system?</em> These do not need to all be of the same nature. While epidemiological models all distribute people in compartments, ecological models almost always involve more than one species of agents.</p>
+<p><em>ii. What states can the agents take?</em> A system with <span class="math notranslate nohighlight">\(m\)</span> types of agents that can all take <span class="math notranslate nohighlight">\(n\)</span> different states will therefore consist of <span class="math notranslate nohighlight">\(m\times n\)</span> compartments. States need to be descriptive enough such that agents in the same state can be considered indistinguishable.</p>
+<p><em>iii. How do agents update their state?</em> These mechanisms will specify the arrows from one compartment to another.</p>
+<p><em>iv. Is the system closed or open?</em> Additional mechanisms can describe the arrival/birth or departure/death of agents. Agents coming from or going into a void correspond to arrows connected only to a single compartment, and often mean that the population of agents is not conserved over time.</p>
+</section>
+<section id="examples-from-epidemiological-models">
+<h2>Examples from epidemiological models<a class="headerlink" href="#examples-from-epidemiological-models" title="Link to this heading">#</a></h2>
+<p>Let us walk through the modeling recipe and derive some of the most classic <a class="reference external" href="https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology">compartmental models in epidemiology</a>. We here care about modeling a directly transmissible infectious disease in a population.</p>
+<p><em>i. What are the key agents of the system?</em> We assume that we only care about people, ignoring potential animal reservoirs, or top-down interventions from public health department. Of course, these could be added using additional diagrams if desired.</p>
+<p><em>ii. What states can the agents take?</em>  We will also assume that all people with the same epidemiological state are indistinguishable (serostatus or immunological state). This means that there is no variation in susceptibility to a disease, exposure to the pathogen, or immune system once infected. In their simplest form, they therefore classify agents based in a few distinct compartments: Suceptible agents, Exposed agents, Infectious agents, and Recovered agents.</p>
+<p><em>iii. How do agents update their state?</em> Each susceptible agent becomes Exposed at a rate proportional to the number of infectious agents in the population if we assume that all agents can interact with all other agents. Exposed agents transition to an infectious state at a fixed rate as the disease develops. Likewise, infectious agents recover or die from the infection. Regardless if it’s due to immunity or death, recovered agents are fixed in that state forever. That is to say, Recovered agents and Dead agents could be separate compartments but they would then play an identical role in the system.</p>
+<p><em>iv. Is the system closed or open?</em> In general, because outbreaks tend to occur over a short period of time, we ignore demographic dynamics. There is no reproduction (no self-loop), no immigration (input from the void) or anything else of the sort. For longer epidemics, this assumption might become critical.</p>
+<p><img alt="compartment_schematic_SEIR" src="../_images/schematic_SEIR.png" /></p>
+<p>Compared to the previous models, the one novel thing here is the nonlinear term <span class="math notranslate nohighlight">\(\beta S(t) I(t)\)</span>. We had seen constant terms to describe things that happen at a fixed rate regardless of the state of the system (e.g., arrival of new agents at rate <span class="math notranslate nohighlight">\(\alpha\)</span> in the building example). We had seen linear terms like <span class="math notranslate nohighlight">\(\gamma I(t)\)</span> to describe a process that happens at rate <span class="math notranslate nohighlight">\(\gamma\)</span> to all agents <span class="math notranslate nohighlight">\(I(t)\)</span> in a given state, such that the total amount of change <span class="math notranslate nohighlight">\(\gamma I(t)\)</span> depends on the state of the system. The nonlinear term <span class="math notranslate nohighlight">\(\beta S(t) I(t)\)</span> can be described as follows: All agents <span class="math notranslate nohighlight">\(S(t)\)</span> in a susceptible state can be infected at rate <span class="math notranslate nohighlight">\(\beta\)</span> by all agents <span class="math notranslate nohighlight">\(I(t)\)</span> in an infected state. Another way to see this term is that there are <span class="math notranslate nohighlight">\(S(t) \times I(t)\)</span> pairs of susceptible and infectious agents, and all of these pairs create a new infection at rate <span class="math notranslate nohighlight">\(\beta\)</span>. We are therefore assuming that all parts or agents of the system interact with all other parts at all time! This is one of those <em>mean-field approximation</em> since we have to assume that <span class="math notranslate nohighlight">\(S(t)\)</span> and <span class="math notranslate nohighlight">\(I(t)\)</span> are independent for the average of <span class="math notranslate nohighlight">\(S\times I\)</span> to be equal to the average <span class="math notranslate nohighlight">\(S(t)\)</span> multiplied by the average <span class="math notranslate nohighlight">\(I(t)\)</span>.</p>
+<p>The general  model structure described above is often called the SEIR model for obvious reasons. There are other classic models. We can ignore the latent period captured by the E compartment by sending individuals directly from S to I to obtain the SIR model. Further, recovered individuals can lose immunity at a rate <span class="math notranslate nohighlight">\(\delta\)</span> and return to the S compartment to give us the SIRS model. If immunity is very short lived, we might even decide to bypass the R compartment altogether and have a simple SIS model.</p>
+<p>Regardless of the exact structure, once a compartmental model has been drawn we can start using a standard toolbox from the study of dynamical systems. These tools allow us to write down, run, and analyze the corresponding mathematical model. This is the focus of the rest of this tutorial.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Mean-field approximations and compartmental models</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="discrete_models.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Writing discrete models</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling-recipe">Modeling recipe</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-from-epidemiological-models">Examples from epidemiological models</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Laurent Hébert-Dufresne
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

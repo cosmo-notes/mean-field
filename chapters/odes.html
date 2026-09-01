@@ -1,0 +1,574 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Writing continuous models &#8212; Mean-Field</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/odes';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Numerical integration" href="numerical_integration.html" />
+    <link rel="prev" title="Writing discrete models" href="discrete_models.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Mean-Field - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Mean-Field - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mean-field 101</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="mf_definitions.html">Compartmental models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discrete_models.html">Writing discrete models</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Writing differential equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numerical_integration.html">Numerical integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulations.html">Stochastic simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stability.html">Stability analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chaos.html">Chaos</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lotka_volterra.html">Lotka-Volterra system</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/cosmos-books/tame/main?urlpath=lab/tree/chapters/odes.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/cosmos-books/tame" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/odes.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Writing continuous models</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seirs-epidemiological-model">SEIRS epidemiological model</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="writing-continuous-models">
+<h1>Writing continuous models<a class="headerlink" href="#writing-continuous-models" title="Link to this heading">#</a></h1>
+<p>Compartmental models provide a clear map of the variables needed to describe a system and of the mechanisms involved in their dynamics. In continuous time, we can follow a simple recipe to go from a compartmental model to a system of discrete equations tracking the change of key variables at every time step of the model.</p>
+<p>We will write down the change in the quantities of interest over time. We denote <span class="math notranslate nohighlight">\(dN(t)/dt\)</span> the small change <span class="math notranslate nohighlight">\(dN(t)\)</span> in the quantity <span class="math notranslate nohighlight">\(N(t)\)</span> calculated over some infinitely small time window <span class="math notranslate nohighlight">\(dt\)</span>. One can interpret it as the change in <span class="math notranslate nohighlight">\(N(t)\)</span> over a small change in <span class="math notranslate nohighlight">\(t\)</span>. In other words: <span class="math notranslate nohighlight">\(dN(t)/dt\)</span> is the slope of the time series of <span class="math notranslate nohighlight">\(N(t)\)</span> at time <span class="math notranslate nohighlight">\(t\)</span>, and captures the <em>rate of change</em> of <span class="math notranslate nohighlight">\(N(t)\)</span> at time <span class="math notranslate nohighlight">\(t\)</span>. And as it turns out, we will be able to recover the unknown time series <span class="math notranslate nohighlight">\(N(t)\)</span> from the differential equation <span class="math notranslate nohighlight">\(dN(t)/dt\)</span>.</p>
+<p>The general recipe to write is as follows.</p>
+<p><em>i. Every compartment corresponds to a variable that needs to be tracked over time and for which we need a differential equation.</em></p>
+<p><em>ii. Every arrow entering a compartment corresponds to a positive term in the differential equation for that variable.</em></p>
+<p><em>iii. Every arrow leaving a compartment corresponds to a negative term in the differential equation for that variable</em></p>
+<p>Here are some rapid fire examples:</p>
+<p><img alt="compartment_schematic1" src="../_images/schematic1.png" /></p>
+<p>We can follow the dynamics of <span class="math notranslate nohighlight">\(N(t)\)</span> using the following differential equation:
+$<span class="math notranslate nohighlight">\(
+\begin{align}
+\frac{d}{dt}N(t) &amp;= \alpha - \beta N(t) \; .
+\end{align}
+\)</span><span class="math notranslate nohighlight">\(
+There is a constant input \)</span>\alpha<span class="math notranslate nohighlight">\( and a variable output \)</span>\beta N(t)<span class="math notranslate nohighlight">\(. Therefore, over a small time window \)</span>dt<span class="math notranslate nohighlight">\(, \)</span>N(t)$ will change by the difference between the input and the output. That’s it! Things can get slightly more complicated in more complicated models.</p>
+<p><img alt="compartment_schematic2" src="../_images/schematic2.png" /></p>
+<p>Two compartments so, as a general rule of thumb, we should need two variables. And so we write the following system of differential equations:
+$<span class="math notranslate nohighlight">\(
+\begin{align}
+\frac{d}{dt}E(t) &amp;= \beta N(t) - \alpha E(t) \; , \\
+\frac{d}{dt}N(t) &amp;= \alpha E(t) - \beta N(t) \; .
+\end{align}
+\)</span>$</p>
+<p>However, in this case the expected total number of agents should never change and the total population <span class="math notranslate nohighlight">\(P\)</span> should always be equal to <span class="math notranslate nohighlight">\(P(t) = E(t) + N(t)\)</span>. We can convince ourselves that this population should not change since its derivative is equal to zero; which means no change! Formally, this can be written as
+$<span class="math notranslate nohighlight">\(
+\begin{align}
+\frac{d}{dt}P(t) &amp;= \frac{d}{dt}E(t) + \frac{d}{dt}P(t) = 0 \; .
+\end{align}
+\)</span><span class="math notranslate nohighlight">\(
+So while our system is described by two variables, it has only one *degree of freedom*. Meaning we only need one quantity and we know the state of the entire system. If we know \)</span>E(t)<span class="math notranslate nohighlight">\(, we know that \)</span>N(t) = P - E(t)$. We therefore only need one of the two differential equations to describe the system above. But if we look at the next system, we’ll see why that doesn’t work if the population isn’t conserved</p>
+<p><img alt="compartment_schematic3" src="../_images/schematic3.png" /></p>
+<p>We follow our general recipe and write,
+$<span class="math notranslate nohighlight">\(
+\begin{align}
+\frac{d}{dt}E(t) &amp;= \beta N(t) - \alpha E(t) \; , \\
+\frac{d}{dt}N(t) &amp;= \alpha E(t) + \gamma N(t) - \beta N(t) \; .
+\end{align}
+\)</span><span class="math notranslate nohighlight">\(
+The population \)</span>P<span class="math notranslate nohighlight">\( now follows
+\)</span><span class="math notranslate nohighlight">\(
+\begin{align}
+\frac{d}{dt}P(t) &amp;= \frac{d}{dt}E(t) + \frac{d}{dt}P(t) = \gamma N(t) \; .
+\end{align}
+\)</span><span class="math notranslate nohighlight">\(
+The population changes! So after we write down an equation for \)</span>E(t)<span class="math notranslate nohighlight">\(, we either need \)</span>dP(t)/dt<span class="math notranslate nohighlight">\( so that we can track \)</span>P(t)<span class="math notranslate nohighlight">\( and use \)</span>N(t) = P(t) - E(t)<span class="math notranslate nohighlight">\( or we need to directly use \)</span>N(t)$. The system therefore has two degrees of freedom since we need two quantities to fully describe its state and dynamics.</p>
+<p>In general, every conserved quantity provides an opportunity to reduce the number of degrees of freedom in our system of equations.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These equations are all called <em>ordinary differential equations</em> (or ODEs) since they all depend on a single independent variable: time. We will therefore often refer to these mathematical models as system of ODEs for simplicity..</p>
+</div>
+<section id="seirs-epidemiological-model">
+<h2>SEIRS epidemiological model<a class="headerlink" href="#seirs-epidemiological-model" title="Link to this heading">#</a></h2>
+<p><img alt="SEIRS" src="../_images/schematic_SEIRS.png" /></p>
+<p>We follow our general recipe and write,
+$<span class="math notranslate nohighlight">\(
+\begin{align}
+\frac{d}{dt}S(t) &amp;= \delta R(t) - \beta S(t)I(t) \; , \\
+\frac{d}{dt}E(t) &amp;= \beta S(t)I(t) - \alpha E(t) \; , \\
+\frac{d}{dt}I(t) &amp;= \alpha E(t) - \gamma I(t) \; , \\
+\end{align}
+\)</span>$</p>
+<p>Again, we do not need a fourth equation since this is a conserved population <span class="math notranslate nohighlight">\(S(t) + E(t) + I(t) + R(t) = N\)</span>. We could always get <span class="math notranslate nohighlight">\(R(t)\)</span> from the three other degrees of freedom: <span class="math notranslate nohighlight">\(R(t) = N - S(t) - E(t) - I(t)\)</span>. However, it can be a good idea to be thorough and write the fourth equation,
+$<span class="math notranslate nohighlight">\(
+\begin{align}
+\frac{d}{dt}R(t) &amp;= \gamma I(t) - \delta R(t) \; ,
+\end{align}
+\)</span><span class="math notranslate nohighlight">\(
+since the condition of a conserved population can also be used to double check any solution we get out of the system. In fact, it can also help us make sure we wrote down the equations correctly since it implies that \)</span>\frac{d}{dt}S(t) + \frac{d}{dt}E(t) + \frac{d}{dt}I(t) + \frac{d}{dt}R(t) = 0$, which we easily check in this case. In general, we can also test the validity of model runs by testing for a conserved population. But this also brings us to our next topic. How do we actually run these models?</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="discrete_models.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Writing discrete models</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="numerical_integration.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Numerical integration</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seirs-epidemiological-model">SEIRS epidemiological model</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Laurent Hébert-Dufresne
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
