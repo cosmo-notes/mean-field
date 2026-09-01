@@ -1,0 +1,33 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: chapters/index
+parts:
+- caption: Mean-field 101
+  chapters:
+  - file: chapters/mf_definitions
+    title: Compartmental models
+  - file: chapters/discrete_models
+    title: Writing discrete models
+  - file: chapters/odes
+    title: Writing differential equations
+  - file: chapters/numerical_integration
+    title: Numerical integration
+  - file: chapters/simulations
+    title: Stochastic simulation
+  - file: chapters/stability
+    title: Stability analysis
+  - file: chapters/criticality
+    title: Phase transition & criticality
+  - file: chapters/chaos
+    title: Chaos
+
+- caption: Applications
+  chapters:
+  - file: chapters/epidemic_models
+    title: Epidemic models
+  - file: chapters/lotka_volterra
+    title: Lotka-Volterra system
+
+
