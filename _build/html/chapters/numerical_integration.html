@@ -386,31 +386,38 @@
 <section id="taylor-series">
 <h2>Taylor series<a class="headerlink" href="#taylor-series" title="Link to this heading">#</a></h2>
 <p>Taylor series are the mathematical construct that formalize the logic of tracking a quantity through its current position, speed, acceleration, and so forth. Specifically, they say that (under some general conditions) we can reconstruct a function by knowing its value at one point and all of its derivative at the same point. To construct this representation of a time series of interest <span class="math notranslate nohighlight">\(f(t)\)</span>, we write a power series such that we preserve the value of the function and of its derivatives at some point <span class="math notranslate nohighlight">\(t_0\)</span> without explicitly writing <span class="math notranslate nohighlight">\(f(t)\)</span>.</p>
-<p>We use a succint notation with primes and numbers to denote derivatives such that the first derivative of <span class="math notranslate nohighlight">\(f(t)\)</span> with regards to time is <span class="math notranslate nohighlight">\(f'(t)\)</span> or <span class="math notranslate nohighlight">\(f^{(1)}(t)\)</span> and the second <span class="math notranslate nohighlight">\(f''(t)\)</span> or <span class="math notranslate nohighlight">\(f^{(2)}(t)\)</span> and so on. We can therefore write the representation discussed above as
-$<span class="math notranslate nohighlight">\(
+<p>We use a succinct notation with primes and numbers to denote derivatives such that the first derivative of <span class="math notranslate nohighlight">\(f(t)\)</span> with regards to time is either denoted by <span class="math notranslate nohighlight">\(f'(t)\)</span> or <span class="math notranslate nohighlight">\(f^{(1)}(t)\)</span> and the second derivative by <span class="math notranslate nohighlight">\(f''(t)\)</span> or <span class="math notranslate nohighlight">\(f^{(2)}(t)\)</span> and so on. We can therefore write the representation discussed above as</p>
+<div class="math notranslate nohighlight">
+\[
 \begin{align}
 f(t) &amp;= f(t_0) + f'(t_0)\times(t-t_0) + \frac{1}{2}f''(t_0)\times(t-t_0)^2 + \frac{1}{6}f'''(t_0)\times(t-t_0)^3 + \sum _{n=4}^{\infty} \frac{1}{n!}f^{(n)}(t_0)\times(t-t_0)^n \; .
 \end{align}
-\)</span>$</p>
-<p>This formula might look like magic with its weird factorial coefficients but can be derived with a simple logic. We ask that the value of <span class="math notranslate nohighlight">\(f(t)\)</span> to be equal to <span class="math notranslate nohighlight">\(f(t_0)\)</span> when <span class="math notranslate nohighlight">\(t=t_0\)</span> and all the terms parentheses take care of that. We then ask that the values of the <span class="math notranslate nohighlight">\(n\)</span>-th derivative be equal to <span class="math notranslate nohighlight">\(f^(n)(t_0)\)</span>, and that we get since the <span class="math notranslate nohighlight">\(n\)</span>-th derivative of <span class="math notranslate nohighlight">\((t-t_0)^n)\)</span> is simply <span class="math notranslate nohighlight">\(n!\)</span> which is what we cancel out with the weird coefficients. Therefore, one can represent the unknown time series by adding progressively more terms to this series up to an exact representation with an infinite number of terms. In practice, this might look something like this:</p>
+\]</div>
+<p>One can represent the unknown time series by adding progressively more terms to this Taylor series up to an exact representation with an infinite number of terms. In practice, this might look something like this:</p>
 <p><img alt="taylor-series" src="../_images/taylor-series.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Taylor series formula might look like magic with its weird factorial coefficients but can be derived with a simple logic. We ask that the value of <span class="math notranslate nohighlight">\(f(t)\)</span> to be equal to <span class="math notranslate nohighlight">\(f(t_0)\)</span> when <span class="math notranslate nohighlight">\(t=t_0\)</span> and all the terms parentheses take care of that. We then ask that the values of the <span class="math notranslate nohighlight">\(n\)</span>-th derivative be equal to <span class="math notranslate nohighlight">\(f^(n)(t_0)\)</span>, and that we get since the <span class="math notranslate nohighlight">\(n\)</span>-th derivative of <span class="math notranslate nohighlight">\((t-t_0)^n)\)</span> is simply <span class="math notranslate nohighlight">\(n!\)</span> which is what we cancel out with the weird coefficients.</p>
+</div>
 </section>
 <section id="example-euler-s-method-of-integration">
 <h2>Example: Euler’s method of integration<a class="headerlink" href="#example-euler-s-method-of-integration" title="Link to this heading">#</a></h2>
-<p>If we look at the Taylor series of an unknown temporal function <span class="math notranslate nohighlight">\(f(t)\)</span> as represented above, we might be unsure how this helps our situation since we might only know our starting point <span class="math notranslate nohighlight">\(f(t_0)\)</span> and its first derivative <span class="math notranslate nohighlight">\(f'(t_0)\)</span> but all higher-order derivatives are unknown. However, one derivative might be all we need if we’re patient enough. Say we care about the state of the system after some time step <span class="math notranslate nohighlight">\(h\)</span> such that time is now <span class="math notranslate nohighlight">\(t=t_0 + h\)</span>, we can write a simple approximation
-$<span class="math notranslate nohighlight">\(
+<p>If we look at the Taylor series of an unknown temporal function <span class="math notranslate nohighlight">\(f(t)\)</span> as represented above, we might be unsure how this helps our situation since we might only know our starting point <span class="math notranslate nohighlight">\(f(t_0)\)</span> and its first derivative <span class="math notranslate nohighlight">\(f'(t_0)\)</span> but all higher-order derivatives are unknown. However, one derivative might be all we need if we’re patient enough. Say we care about the state of the system after some time step <span class="math notranslate nohighlight">\(h\)</span> such that time is now <span class="math notranslate nohighlight">\(t=t_0 + h\)</span>, we can write a simple approximation,</p>
+<div class="math notranslate nohighlight">
+\[
 \begin{align}
 f(t) \approx f_{e}(t_0+h) &amp;= f(t_0) + f'(t_0)\times(t-t_0) = f(t_0) + hf'(t_0) \; .
 \end{align}
-\)</span>$</p>
+\]</div>
 <p>This approximation is equivalent to saying that I can guess the position of car in 30 minutes if I know where it is and that it is going at 100km/h north. It’ll be 50km further up north! But if <span class="math notranslate nohighlight">\(h\)</span> is small enough, and if we are ok with measuring the speed of the system often, then we can theoretically get a perfect description by simply iterating this simple algorithm known as Euler’s method.</p>
 <p><img alt="euler-method" src="../_images/euler.png" /></p>
-<p>We will compare different method of integration by looking at the scale of their <em>local error</em> – i.e., the mistake we expect them to make at every step – and their <em>global error</em> when integrating a long trajectory. For small <span class="math notranslate nohighlight">\(h\)</span> going to zero, and comparing the formula of Euler’s method with a full Taylor series we find the local error
-$<span class="math notranslate nohighlight">\(
+<p>We will compare different method of integration by looking at the scale of their <em>local error</em> – i.e., the mistake we expect them to make at every step – and their <em>global error</em> when integrating a long trajectory. For small <span class="math notranslate nohighlight">\(h\)</span> going to zero, and comparing the formula of Euler’s method with a full Taylor series we find the local error</p>
+<div class="math notranslate nohighlight">
+\[
 \begin{align}
 f(t) - f_{e}(t_0+h) &amp;= f(t_0) + hf'(t_0) - f(t_0) - hf'(t_0) -\mathcal{O}(h^2) \propto h^2 \; .
 \end{align}
-\)</span>$</p>
+\]</div>
 <p>This means that if we reduce our timestep <span class="math notranslate nohighlight">\(h\)</span> by 10, we should expect the local error to be 100 times smaller. Not a bad deal. However, say we are integrating up to a large time <span class="math notranslate nohighlight">\(t=t_0+T\)</span> such that we have to make <span class="math notranslate nohighlight">\(T/h\)</span> steps. We should expect the global error to be proportional to <span class="math notranslate nohighlight">\(h\)</span>. Meaning that if we reduce our timestep <span class="math notranslate nohighlight">\(h\)</span> by 10, we should expect our global error to be 10 times smaller. We will still get the right answer as <span class="math notranslate nohighlight">\(h\)</span> goes to zero, but the error doesn’t fall very quickly.</p>
 <p>Using Euler’s method, we can integrate the ODE system for the SIR model like so</p>
 <div class="cell docutils container">
@@ -479,16 +486,17 @@ f(t) - f_{e}(t_0+h) &amp;= f(t_0) + hf'(t_0) - f(t_0) - hf'(t_0) -\mathcal{O}(h^
 <section id="example-heun-s-method-of-integration">
 <h2>Example: Heun’s method of integration<a class="headerlink" href="#example-heun-s-method-of-integration" title="Link to this heading">#</a></h2>
 <p>The goal of the numerical integration game is therefore to estimate higher order derivative in the full Taylor series of our unknown time series so that we can decrease the local error of our algorithm. We can illustrate how that’s done with another simple method that gets us more bang for our buck.</p>
-<p>The first term of the Taylor series not included in the formulat for Euler’s method is <span class="math notranslate nohighlight">\(\frac{1}{2}f''(t_0)\times (t-t_0)^2\)</span>. The quantity <span class="math notranslate nohighlight">\(f''(t_0)\)</span> is the rate of change of the derivative <span class="math notranslate nohighlight">\(f'(t)\)</span> at <span class="math notranslate nohighlight">\(t=t_0\)</span>. We can computationally estimate this rate of change by measuring <span class="math notranslate nohighlight">\(f'(t)\)</span> more than once. This is the general idea behind all of the other methods we will use. During a time step <span class="math notranslate nohighlight">\(h\)</span>, the rate of change of <span class="math notranslate nohighlight">\(f'(t)\)</span> can be estimated by its own slope: <span class="math notranslate nohighlight">\(f''(t_0) = \left[f'(t_0+h)-f'(t_0)\right]/h\)</span>. Let’s insert this estimate in our Taylor series and call this Heun’s method of integration:
-$<span class="math notranslate nohighlight">\(
+<p>The first term of the Taylor series not included in the formulat for Euler’s method is <span class="math notranslate nohighlight">\(\frac{1}{2}f''(t_0)\times (t-t_0)^2\)</span>. The quantity <span class="math notranslate nohighlight">\(f''(t_0)\)</span> is the rate of change of the derivative <span class="math notranslate nohighlight">\(f'(t)\)</span> at <span class="math notranslate nohighlight">\(t=t_0\)</span>. We can computationally estimate this rate of change by measuring <span class="math notranslate nohighlight">\(f'(t)\)</span> more than once. This is the general idea behind all of the other methods we will use. During a time step <span class="math notranslate nohighlight">\(h\)</span>, the rate of change of <span class="math notranslate nohighlight">\(f'(t)\)</span> can be estimated by its own slope: <span class="math notranslate nohighlight">\(f''(t_0) = \left[f'(t_0+h)-f'(t_0)\right]/h\)</span>. Let’s insert this estimate in our Taylor series and call this Heun’s method of integration:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \begin{align}
 f(t) \approx f_{h}(t_0+h) &amp;= f(t_0) + hf'(t_0) + h^2\frac{1}{2}\frac{f'(t_0+h)-f'(t_0)}{h}\\
  &amp;= f(t_0) + h\frac{f'(t_0+h)+f'(t_0)}{2} \approx f(t_0) + h\frac{f_e'(t_0+h)+f'(t_0)}{2}
 \end{align}
-\)</span>$</p>
+\end{split}\]</div>
 <p>In the last relation, we are replacing the true derivative of the system at <span class="math notranslate nohighlight">\(t_0+h\)</span> by its estimate following a step of Euler method because we obviously don’t actually know whether the system will be at <span class="math notranslate nohighlight">\(t_0 + h\)</span>. This algorithm therefore uses a “look ahead” trick: Evaluate the current derivative, pretend you are doing a step of Euler’s method, evaluate the derivate at that point to estimate the second derivative, use that to do a better step. It can be illustrated like so, where dash black arrows are the evaluation of the first derivative and the dash orange time series is a better estimate of the true trajectory.</p>
 <p><img alt="heun-method" src="../_images/heun.png" /></p>
-<p>Despite the approximation in the final step of Heun’s formula, the algorithm can be shown to have a local and global error proportional to <span class="math notranslate nohighlight">\(h^3\)</span> and <span class="math notranslate nohighlight">\(h^2\)</span> respectively, when <span class="math notranslate nohighlight">\(h\)</span> is small. This means that if we divide <span class="math notranslate nohighlight">\(h\)</span> by 10, we actually improve our global trajectory by 100-fold!</p>
+<p>Despite the approximation in the final step of Heun’s formula, the algorithm can be shown to have a local and global error proportional to <span class="math notranslate nohighlight">\(h^3\)</span> and <span class="math notranslate nohighlight">\(h^2\)</span> respectively, when <span class="math notranslate nohighlight">\(h\)</span> is small. This means that if we divide <span class="math notranslate nohighlight">\(h\)</span> by 10, we actually expect to improve the precision of our global trajectory by 100-fold!</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>To prove the error scaling of Heun’s method, one can write a Taylor series for the derivative <span class="math notranslate nohighlight">\(f'(t_0+h)\)</span> in the formula and compare the resulting series with the full Taylor series of <span class="math notranslate nohighlight">\(f(t)\)</span>.</p>
@@ -496,18 +504,11 @@ f(t) \approx f_{h}(t_0+h) &amp;= f(t_0) + hf'(t_0) + h^2\frac{1}{2}\frac{f'(t_0+
 </section>
 <section id="easy-and-accurate-integration">
 <h2>Easy and accurate integration<a class="headerlink" href="#easy-and-accurate-integration" title="Link to this heading">#</a></h2>
-<p>Fancier numerical integrator use the same logic. By making more observations, algorithms can estimate higher-order derivatives and capture more terms in the true Taylor series of the time series we are looking for. Going forward, we will generally rely on \texttt{odeint} from the SciPy package. Here is that SIR example in this better solver.</p>
+<p>Fancier numerical integrator use the same logic. By making more observations, algorithms can estimate higher-order derivatives and capture more terms in the true Taylor series of the time series we are looking for. Going forward, we will generally rely on \texttt{odeint} from the SciPy package. We first define the SIR example ODEs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;ggplot&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-talk&#39;</span><span class="p">])</span>
-
-<span class="c1"># We will use the odeint routine</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">odeint</span>
-
-<span class="c1"># Master Equations</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">J</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Differential equations</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ODEs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Time derivative of the occupation numbers.</span>
 
@@ -523,6 +524,19 @@ f(t) \approx f_{h}(t_0+h) &amp;= f(t_0) + hf'(t_0) + h^2\frac{1}{2}\frac{f'(t_0+
     <span class="n">dx</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#derivative for R</span>
 
     <span class="k">return</span> <span class="n">dx</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And solve them with a built-in solver:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;ggplot&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-talk&#39;</span><span class="p">])</span>
+
+<span class="c1"># We will use the odeint routine</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">odeint</span>
 
 <span class="c1"># Parameters</span>
 <span class="n">N</span> <span class="o">=</span> <span class="mi">10000</span> <span class="c1">#population</span>
@@ -538,7 +552,7 @@ f(t) \approx f_{h}(t_0+h) &amp;= f(t_0) + hf'(t_0) + h^2\frac{1}{2}\frac{f'(t_0+
 <span class="n">x_0</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">x_0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">x_0</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
 <span class="c1"># Integration</span>
-<span class="n">G</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">J</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+<span class="n">G</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">ODEs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
 <span class="n">x_path</span> <span class="o">=</span> <span class="n">odeint</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">t_vec</span><span class="p">)</span>
 
 <span class="c1"># Plot</span>
@@ -554,6 +568,67 @@ f(t) \approx f_{h}(t_0+h) &amp;= f(t_0) + hf'(t_0) + h^2\frac{1}{2}\frac{f'(t_0+
 </div>
 <div class="cell_output docutils container">
 <img alt="../_images/9ea435a49fdd6b2ae011fa78790c5e7ad39736db93875c27999d965c03e4e53a.png" src="../_images/9ea435a49fdd6b2ae011fa78790c5e7ad39736db93875c27999d965c03e4e53a.png" />
+</div>
+</div>
+<p>We can also compare the solutions with a rough run of Euler’s method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;ggplot&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-talk&#39;</span><span class="p">])</span>
+
+<span class="c1"># We will use the odeint routine</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">odeint</span>
+
+<span class="c1"># Parameters</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">10000</span> <span class="c1">#population</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="c1">#transmission time per contact: 6 days. contacts per day: N</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">15</span> <span class="c1">#recovery period: 15 days</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="c1">#integration step</span>
+<span class="n">t_length</span> <span class="o">=</span> <span class="mi">182</span>
+<span class="n">t_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">t_length</span><span class="p">)</span>
+
+<span class="c1">#odeint initial conditions and run</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">x_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">x_0</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">x_0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">x_0</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">G</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">ODEs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+<span class="n">x_path</span> <span class="o">=</span> <span class="n">odeint</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">t_vec</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">execution_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;odeint runtime: </span><span class="si">{</span><span class="n">execution_time</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+
+
+<span class="c1">#Euleur initial conditions and run</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">R</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">IC</span> <span class="o">=</span> <span class="p">[</span><span class="n">S</span><span class="p">,</span><span class="n">I</span><span class="p">,</span><span class="n">R</span><span class="p">]</span>
+<span class="p">(</span><span class="n">St</span><span class="p">,</span><span class="n">It</span><span class="p">,</span><span class="n">Rt</span><span class="p">)</span> <span class="o">=</span> <span class="n">run_Euler_SIR</span><span class="p">(</span><span class="n">t_length</span><span class="p">,</span> <span class="n">IC</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">execution_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Euntime: </span><span class="si">{</span><span class="n">execution_time</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_vec</span><span class="p">,</span> <span class="n">x_path</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;odeint susceptible&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">tmax</span><span class="o">/</span><span class="n">h</span><span class="p">),</span> <span class="n">St</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Euler susceptible&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_vec</span><span class="p">,</span><span class="n">x_path</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Infectious&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">tmax</span><span class="o">/</span><span class="n">h</span><span class="p">),</span> <span class="n">It</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Euler infectious&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_vec</span><span class="p">,</span><span class="n">x_path</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Recovered&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">tmax</span><span class="o">/</span><span class="n">h</span><span class="p">),</span> <span class="n">Rt</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Euler recovered&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [days]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Agents&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>odeint runtime: 0.001123 seconds
+Euntime: 0.000229 seconds
+</pre></div>
+</div>
+<img alt="../_images/b36dcf572cfc25acfc4667a600182c7a63daa76f44dc42d6058457c4f3b5be2b.png" src="../_images/b36dcf572cfc25acfc4667a600182c7a63daa76f44dc42d6058457c4f3b5be2b.png" />
 </div>
 </div>
 </section>
