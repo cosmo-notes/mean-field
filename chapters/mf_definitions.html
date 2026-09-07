@@ -65,7 +65,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/mf_definitions';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Writing discrete models" href="discrete_models.html" />
+    <link rel="next" title="Writing continuous models" href="odes.html" />
     <link rel="prev" title="Mean-field approximations and compartmental models" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -165,7 +165,6 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mean-field 101</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Compartmental models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discrete_models.html">Writing discrete models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="odes.html">Writing differential equations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numerical_integration.html">Numerical integration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="simulations.html">Stochastic simulation</a></li>
@@ -385,7 +384,7 @@
 <p>Compartmental models are drawn using boxes and arrows. Boxes are compartments in which we can put agents or parts of our system when we judge them to be indistinguishable. And arrows will describe the mechanisms through which things can flow from one compartment to another based on the mechanistic rules of the system.</p>
 <p>Consider a really simple system where we are interested in people entering and leaving a building. The relevant agents of our system are people, and we might only want to count those that are in the building and consider them all indistinguishable. We can therefore have a single compartment (representing the state of being in the building) and assume that all people therein are identical: They follow the exact same rules and leave the building at the exact same rate. We assign a dynamic variable <span class="math notranslate nohighlight">\(N(t)\)</span> representing the <em>expected</em> number of agents in the compartment at time <span class="math notranslate nohighlight">\(t\)</span>. And two mechanisms can then influence <span class="math notranslate nohighlight">\(N(t)\)</span>: New agents can enter the building at rate <span class="math notranslate nohighlight">\(\alpha\)</span> and each agent in the building can leave at rate <span class="math notranslate nohighlight">\(\beta\)</span>. This compartmental model can therefore be drawn as:</p>
 <p><img alt="compartment_schematic1" src="../_images/schematic1.png" /></p>
-<p>The above compartmental model represents an <em>open population</em> since there are arrows flowing out and into a void. That void represents a part of the real system that we are not explicitly modeling, here the outside of the building. Note that, in general, we will also omit the time dependency and simply write <span class="math notranslate nohighlight">\(N(t)\)</span>, assuming that all compartments can vary in time. Importantly, we said the rate at which agents is fixed at <span class="math notranslate nohighlight">\(\alpha\)</span> (an expected number of new agents over some time period) but the rate at which agent leave the building is applied to each agent independently such that the total exit rate is equal to <span class="math notranslate nohighlight">\(\beta N(t)\)</span>. If we have ten times more agents in the building, the total exit rate is ten times higher; and if we have zero agent in the building, the total exit rate is zero.</p>
+<p>The above compartmental model represents an <em>open population</em> since there are arrows flowing out and into a void. That void represents a part of the real system that we are not explicitly modeling, here the outside of the building. Note that, in general, we will also omit the time dependency and simply write <span class="math notranslate nohighlight">\(N\)</span>, assuming that all compartments can vary in time. Importantly, we said the rate at which agents is fixed at <span class="math notranslate nohighlight">\(\alpha\)</span> (an expected number of new agents over some time period) but the rate at which agent leave the building is applied to each agent independently such that the total exit rate is equal to <span class="math notranslate nohighlight">\(\beta N(t)\)</span>. If we have ten times more agents in the building, the total exit rate is ten times higher; and if we have zero agent in the building, the total exit rate is zero.</p>
 <p>If we wanted to explicitly model a <em>closed population</em> whose size is conserved in time, we would need a system of compartments with no arrows connecting to the void. We could for example add a compartment for agents outside the building, thereby adding a second dynamical variable <span class="math notranslate nohighlight">\(E(t)\)</span> for the exterior world.</p>
 <p><img alt="compartment_schematic2" src="../_images/schematic2.png" /></p>
 <p>Finally, compartments can also act upon themselves. Imagine for instance that the building is actually a cloning factory where any of the <span class="math notranslate nohighlight">\(N(t)\)</span> agents expected to be in the building at time <span class="math notranslate nohighlight">\(t\)</span> can choose to clone themselves at a rate <span class="math notranslate nohighlight">\(\gamma\)</span>. The agents do not leave the building but new ones simply appear and the population grows! This type of feedback mechanism can be represented with a self-loop like so:</p>
@@ -454,11 +453,11 @@
       </div>
     </a>
     <a class="right-next"
-       href="discrete_models.html"
+       href="odes.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Writing discrete models</p>
+        <p class="prev-next-title">Writing continuous models</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
