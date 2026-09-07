@@ -478,7 +478,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3f96599960b90f12e81fb91b2360a3cfbf0bc97bb7cc6e9cd0ebeea78168081f.png" src="../_images/3f96599960b90f12e81fb91b2360a3cfbf0bc97bb7cc6e9cd0ebeea78168081f.png" />
+<img alt="../_images/a78cf14481e3c2d74e7ead535b71287060e61878f617de1ceb0706848b8429ef.png" src="../_images/a78cf14481e3c2d74e7ead535b71287060e61878f617de1ceb0706848b8429ef.png" />
 </div>
 </div>
 </section>
@@ -555,7 +555,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6fccea91c36b5b323c92bf4d7ac98a8083e43824efa5de4a1c45766b27b847ca.png" src="../_images/6fccea91c36b5b323c92bf4d7ac98a8083e43824efa5de4a1c45766b27b847ca.png" />
+<img alt="../_images/b3e69a583535d440cabd9751cce582a7eff7308710b47b2d9795856b74bdf3da.png" src="../_images/b3e69a583535d440cabd9751cce582a7eff7308710b47b2d9795856b74bdf3da.png" />
 </div>
 </div>
 <div class="admonition note">
@@ -631,6 +631,7 @@
 <span class="c1">#Add null simulation with label in legend and label the axes</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Simulations&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Infectious agents&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -638,7 +639,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/fee055806de8493daeed5f6225b1cd2f64cdb4b4f14c2110455ece622e30d2ae.png" src="../_images/fee055806de8493daeed5f6225b1cd2f64cdb4b4f14c2110455ece622e30d2ae.png" />
+<img alt="../_images/bc33f3d56a48dbff3d1e5d32767ac75573d3dd74ea5c2627f1faad9b23c6e049.png" src="../_images/bc33f3d56a48dbff3d1e5d32767ac75573d3dd74ea5c2627f1faad9b23c6e049.png" />
 </div>
 </div>
 <p>And we can compare with the mean-field model again:</p>
@@ -693,6 +694,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">times</span><span class="p">,</span><span class="n">history</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Simulations&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_vec</span><span class="p">,</span> <span class="n">x_path</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ODE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Infectious agents&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
@@ -700,7 +702,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0b286d253a5dd040dd7377df3c355ec0e9e3cf04dc26a048d418748f2779105a.png" src="../_images/0b286d253a5dd040dd7377df3c355ec0e9e3cf04dc26a048d418748f2779105a.png" />
+<img alt="../_images/5605abf462cd1772caf6a4a43e104ff2c211cf3896a57c8912ed24a3d569f1d4.png" src="../_images/5605abf462cd1772caf6a4a43e104ff2c211cf3896a57c8912ed24a3d569f1d4.png" />
 </div>
 </div>
 </section>
