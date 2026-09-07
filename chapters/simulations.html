@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Simulations of compartmental model &#8212; Mean-Field</title>
+    <title>Simulations of compartmental models &#8212; Mean-Field</title>
   
   
   
@@ -355,7 +355,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Simulations of compartmental model</h1>
+    <h1>Simulations of compartmental models</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -369,6 +369,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-reaction-method">Next Reaction Method</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cloning-factory-example">Cloning factory example</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-with-mathematical-model">Comparison with mathematical model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seir-model-example">SEIR model example</a></li>
 </ul>
             </nav>
         </div>
@@ -380,8 +381,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="simulations-of-compartmental-model">
-<h1>Simulations of compartmental model<a class="headerlink" href="#simulations-of-compartmental-model" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="simulations-of-compartmental-models">
+<h1>Simulations of compartmental models<a class="headerlink" href="#simulations-of-compartmental-models" title="Link to this heading">#</a></h1>
 <p>There are interesting conceptual questions about simulating the models we’ve been discussing so far. How can we run a model in continuous time using the discrete data structures and logic of programming? The big conceptual jump one needs to make to do exact direct simulations of a continuous time process is to think of time in terms of number of events rather than temporal units. By discretely jumping from one event to the next, one can exactly follow the process in continuous time!</p>
 <p>And for compartmental or mean-field models, this task is actually pretty easy! We do not need to track every possible agent of the system and check what they might do next. All agents in a given compartments are identical or indistinguishable. They all have the same possible transitions and all change states at the same rate. In this context, we therefore suggest using what is called a Next Reaction Method.</p>
 <section id="poisson-processes">
@@ -435,8 +436,7 @@
 <span class="k">for</span> <span class="n">sims</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">25</span><span class="p">):</span>
     
     <span class="c1">#initial conditions</span>
-    <span class="n">E</span> <span class="o">=</span> <span class="mi">10</span>
-    <span class="n">N</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">E</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">time</span> <span class="o">=</span> <span class="mi">0</span>
     
     <span class="c1">#for each generation</span>
@@ -478,7 +478,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/04ee2a9b46b6d4e08000576f14a56687d7fbb3adbd5a2ef45b53a8015f5ec469.png" src="../_images/04ee2a9b46b6d4e08000576f14a56687d7fbb3adbd5a2ef45b53a8015f5ec469.png" />
+<img alt="../_images/3f96599960b90f12e81fb91b2360a3cfbf0bc97bb7cc6e9cd0ebeea78168081f.png" src="../_images/3f96599960b90f12e81fb91b2360a3cfbf0bc97bb7cc6e9cd0ebeea78168081f.png" />
 </div>
 </div>
 </section>
@@ -511,7 +511,7 @@
 <span class="c1"># Differential equations</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">ODEs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Time derivative of the occupation numbers.</span>
+<span class="sd">    Derivative of the number of agents outside (E) and inside (N).</span>
 
 <span class="sd">        * x is the state (array like): [E,N]</span>
 <span class="sd">        * t is time (scalar)</span>
@@ -548,20 +548,160 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">times</span><span class="p">,</span><span class="n">history</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Simulations&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_vec</span><span class="p">,</span> <span class="n">x_path</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ODE&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [days]&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Agents&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Agents in the cloning factory&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c7a72610ac66964e7242cc90ebf374a745566b66f7f4269fbd552bd6a1d31862.png" src="../_images/c7a72610ac66964e7242cc90ebf374a745566b66f7f4269fbd552bd6a1d31862.png" />
+<img alt="../_images/6fccea91c36b5b323c92bf4d7ac98a8083e43824efa5de4a1c45766b27b847ca.png" src="../_images/6fccea91c36b5b323c92bf4d7ac98a8083e43824efa5de4a1c45766b27b847ca.png" />
 </div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Mean-field models work by tracking the expected state of all degrees of freedom of a system, ignoring possible correlations between (or variance within) the degrees of freedom of the system.</p>
 <p>If the higher-order information ignored is insignificant, we get an exact description of the expected state of the system. One can then assume some distribution this expectation (e.g., Gaussian if continuous or Poisson if discrete).</p>
+</div>
+</section>
+<section id="seir-model-example">
+<h2>SEIR model example<a class="headerlink" href="#seir-model-example" title="Link to this heading">#</a></h2>
+<p>We have previously defined the Susceptible-Exposed-Infectious-Recovered model with the following compartmental structure:</p>
+<p><img alt="compartment_schematic_SEIR" src="../_images/schematic_SEIR.png" /></p>
+<p>We can implement a simulation as in the previous example, but we now must be careful: There are fixed points with no possible events! We need to handle the case where the disease goes extinct, i.e. <span class="math notranslate nohighlight">\(E=I=0\)</span>, very carefully. We’ll add some condition to handle it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;ggplot&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-talk&#39;</span><span class="p">])</span>
+
+<span class="c1">#parameters</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">20</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">100</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">20</span>
+
+<span class="c1">#observables</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1">#for each simulation</span>
+<span class="k">for</span> <span class="n">sims</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    
+    <span class="c1">#initial conditions</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> <span class="n">E</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">R</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="c1">#for each generation</span>
+    <span class="k">while</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+        
+        <span class="c1">#calculate total rate R</span>
+        <span class="n">R_exposed</span> <span class="o">=</span> <span class="n">beta</span><span class="o">*</span><span class="n">S</span><span class="o">*</span><span class="n">I</span>
+        <span class="n">R_latent</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">E</span>
+        <span class="n">R_recover</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">*</span><span class="n">I</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">R_exposed</span> <span class="o">+</span> <span class="n">R_latent</span> <span class="o">+</span> <span class="n">R_recover</span>
+        
+        <span class="c1">#draw time to next event and event type</span>
+        <span class="k">if</span> <span class="n">R</span><span class="o">&gt;</span><span class="mf">0.0</span><span class="p">:</span> <span class="c1">#There is now a fixed point!</span>
+            <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">R</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+            <span class="n">history</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">history</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="n">random_number</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">random_number</span> <span class="o">&lt;</span> <span class="n">R_exposed</span><span class="o">/</span><span class="n">R</span><span class="p">:</span> <span class="c1">#exposure</span>
+            <span class="n">S</span><span class="o">-=</span><span class="mi">1</span>
+            <span class="n">E</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">random_number</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">R_latent</span><span class="o">+</span><span class="n">R_exposed</span><span class="p">)</span><span class="o">/</span><span class="n">R</span><span class="p">:</span> <span class="c1">#latency over</span>
+            <span class="n">E</span><span class="o">-=</span><span class="mi">1</span>
+            <span class="n">I</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#recovery</span>
+            <span class="n">I</span><span class="o">-=</span><span class="mi">1</span>
+            <span class="n">R</span><span class="o">+=</span><span class="mi">1</span>
+            
+        <span class="c1">#update history</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="o">+</span><span class="n">tau</span>
+        <span class="n">history</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">history</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+        
+<span class="c1">#print time series</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">times</span><span class="p">,</span><span class="n">history</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+    
+<span class="c1">#Add null simulation with label in legend and label the axes</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Simulations&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Infectious agents&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/fee055806de8493daeed5f6225b1cd2f64cdb4b4f14c2110455ece622e30d2ae.png" src="../_images/fee055806de8493daeed5f6225b1cd2f64cdb4b4f14c2110455ece622e30d2ae.png" />
+</div>
+</div>
+<p>And we can compare with the mean-field model again:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s1">&#39;ggplot&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn-talk&#39;</span><span class="p">])</span>
+
+<span class="c1"># We will use the odeint routine</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">odeint</span>
+
+<span class="c1"># Differential equations</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ODEs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Derivative of the number of agents in S, E, I and R states.</span>
+
+<span class="sd">        * x is the state (array like): [S,E,I,R]</span>
+<span class="sd">        * t is time (scalar)</span>
+<span class="sd">        * beta is the infection rate</span>
+<span class="sd">        * alpha is the latency rate</span>
+<span class="sd">        * gamma is the recovery rate</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">dx</span> <span class="o">=</span> <span class="mi">0</span><span class="o">*</span><span class="n">x</span> <span class="c1">#setting the data structure for every variable</span>
+    <span class="n">dx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">beta</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1">#derivative for S</span>
+    <span class="n">dx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">beta</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">alpha</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#derivative for E</span>
+    <span class="n">dx</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">gamma</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1">#derivative for I</span>
+    <span class="n">dx</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1">#derivative for R</span>
+
+    <span class="k">return</span> <span class="n">dx</span>
+
+<span class="c1">#parameters</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">20</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">100</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">20</span>
+
+<span class="c1"># Time of observations</span>
+<span class="n">t_length</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">t_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">t_length</span><span class="p">)</span>
+
+<span class="c1"># Initial conditions</span>
+<span class="n">x_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">x_0</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> <span class="n">x_0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">x_0</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x_0</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Integration</span>
+<span class="n">G</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">ODEs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+<span class="n">x_path</span> <span class="o">=</span> <span class="n">odeint</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">t_vec</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">times</span><span class="p">,</span><span class="n">history</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Simulations&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_vec</span><span class="p">,</span> <span class="n">x_path</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ODE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Infectious agents&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0b286d253a5dd040dd7377df3c355ec0e9e3cf04dc26a048d418748f2779105a.png" src="../_images/0b286d253a5dd040dd7377df3c355ec0e9e3cf04dc26a048d418748f2779105a.png" />
+</div>
 </div>
 </section>
 </section>
@@ -635,6 +775,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-reaction-method">Next Reaction Method</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cloning-factory-example">Cloning factory example</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-with-mathematical-model">Comparison with mathematical model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seir-model-example">SEIR model example</a></li>
 </ul>
   </nav></div>
 
