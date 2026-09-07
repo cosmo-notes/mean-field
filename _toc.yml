@@ -8,8 +8,6 @@ parts:
   chapters:
   - file: chapters/mf_definitions
     title: Compartmental models
-  - file: chapters/discrete_models
-    title: Writing discrete models
   - file: chapters/odes
     title: Writing differential equations
   - file: chapters/numerical_integration
