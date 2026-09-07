@@ -412,7 +412,6 @@
 <p>So while our system is described by two variables, it has only one <em>degree of freedom</em>. Meaning we only need one quantity and we know the state of the entire system. If we know <span class="math notranslate nohighlight">\(E(t)\)</span>, we know that <span class="math notranslate nohighlight">\(N(t) = P - E(t)\)</span>. We therefore only need one of the two differential equations to describe the system above. But if we look at the next system, we’ll see why that doesn’t work if the population isn’t conserved</p>
 <p><img alt="compartment_schematic3" src="../_images/schematic3.png" /></p>
 <p>We follow our general recipe and write,</p>
-<p>In general, every conserved quantity provides an opportunity to reduce the number of degrees of freedom in our system of equations.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align}
@@ -428,6 +427,7 @@
 \end{align}
 \]</div>
 <p>The population changes! So after we write down an equation for <span class="math notranslate nohighlight">\(E(t)\)</span>, we either need <span class="math notranslate nohighlight">\(dP(t)/dt\)</span> so that we can track <span class="math notranslate nohighlight">\(P(t)\)</span> and use <span class="math notranslate nohighlight">\(N(t) = P(t) - E(t)\)</span> or we need to directly track <span class="math notranslate nohighlight">\(N(t)\)</span>. The system therefore has two degrees of freedom since we need two quantities to fully describe its state and dynamics.</p>
+<p>In general, every conserved quantity provides an opportunity to reduce the number of degrees of freedom in our system of equations.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>These equations are all called <em>ordinary differential equations</em> (or ODEs) since they all depend on a single independent variable: time. We will therefore often refer to these mathematical models as system of ODEs for simplicity..</p>
@@ -435,21 +435,23 @@
 <section id="seirs-epidemiological-model">
 <h2>SEIRS epidemiological model<a class="headerlink" href="#seirs-epidemiological-model" title="Link to this heading">#</a></h2>
 <p><img alt="SEIRS" src="../_images/schematic_SEIRS.png" /></p>
-<p>We follow our general recipe and write,
-$<span class="math notranslate nohighlight">\(
+<p>We follow our general recipe and write,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \begin{align}
 \frac{d}{dt}S(t) &amp;= \delta R(t) - \beta S(t)I(t) \; , \\
 \frac{d}{dt}E(t) &amp;= \beta S(t)I(t) - \alpha E(t) \; , \\
 \frac{d}{dt}I(t) &amp;= \alpha E(t) - \gamma I(t) \; , \\
 \end{align}
-\)</span>$</p>
-<p>Again, we do not need a fourth equation since this is a conserved population <span class="math notranslate nohighlight">\(S(t) + E(t) + I(t) + R(t) = N\)</span>. We could always get <span class="math notranslate nohighlight">\(R(t)\)</span> from the three other degrees of freedom: <span class="math notranslate nohighlight">\(R(t) = N - S(t) - E(t) - I(t)\)</span>. However, it can be a good idea to be thorough and write the fourth equation,
-$<span class="math notranslate nohighlight">\(
+\end{split}\]</div>
+<p>Again, we do not need a fourth equation since this is a conserved population <span class="math notranslate nohighlight">\(S(t) + E(t) + I(t) + R(t) = N\)</span>. We could always get <span class="math notranslate nohighlight">\(R(t)\)</span> from the three other degrees of freedom: <span class="math notranslate nohighlight">\(R(t) = N - S(t) - E(t) - I(t)\)</span>. However, it can be a good idea to be thorough and write the fourth equation,</p>
+<div class="math notranslate nohighlight">
+\[
 \begin{align}
 \frac{d}{dt}R(t) &amp;= \gamma I(t) - \delta R(t) \; ,
 \end{align}
-\)</span><span class="math notranslate nohighlight">\(
-since the condition of a conserved population can also be used to double check any solution we get out of the system. In fact, it can also help us make sure we wrote down the equations correctly since it implies that \)</span>\frac{d}{dt}S(t) + \frac{d}{dt}E(t) + \frac{d}{dt}I(t) + \frac{d}{dt}R(t) = 0$, which we can easily check in this case. In general, we can also test the validity of model runs by testing for a conserved population. But this also brings us to our next topic. How do we actually run these models?</p>
+\]</div>
+<p>since the condition of a conserved population can also be used to double check any solution we get out of the system. In fact, it can also help us make sure we wrote down the equations correctly since it implies that <span class="math notranslate nohighlight">\(\frac{d}{dt}S(t) + \frac{d}{dt}E(t) + \frac{d}{dt}I(t) + \frac{d}{dt}R(t) = 0\)</span>, which we can easily check in this case. In general, we can also test the validity of model runs by testing for a conserved population. But this also brings us to our next topic. How do we actually run these models?</p>
 </section>
 </section>
 
