@@ -387,42 +387,47 @@
 <p><em>iii. Every arrow leaving a compartment corresponds to a negative term in the differential equation for that variable</em></p>
 <p>Here are some rapid fire examples:</p>
 <p><img alt="compartment_schematic1" src="../_images/schematic1.png" /></p>
-<p>We can follow the dynamics of <span class="math notranslate nohighlight">\(N(t)\)</span> using the following differential equation:
-$<span class="math notranslate nohighlight">\(
+<p>We can follow the dynamics of <span class="math notranslate nohighlight">\(N(t)\)</span> using the following differential equation:</p>
+<div class="math notranslate nohighlight">
+\[
 \frac{d}{dt}N(t) = \alpha - \beta N(t) \; .
-\)</span><span class="math notranslate nohighlight">\(
-There is a constant input \)</span>\alpha<span class="math notranslate nohighlight">\( and a variable output \)</span>\beta N(t)<span class="math notranslate nohighlight">\(. Therefore, over a small time window \)</span>dt<span class="math notranslate nohighlight">\(, \)</span>N(t)$ will change by the difference between the input and the output. That’s it! Things can get slightly more complicated in more complicated models.</p>
+\]</div>
+<p>There is a constant input <span class="math notranslate nohighlight">\(\alpha\)</span> and a variable output <span class="math notranslate nohighlight">\(\beta N(t)\)</span>. Therefore, over a small time window <span class="math notranslate nohighlight">\(dt\)</span>, <span class="math notranslate nohighlight">\(N(t)\)</span> will change by the difference between the input and the output. That’s it! Things can get slightly more complicated in more complicated models.</p>
 <p><img alt="compartment_schematic2" src="../_images/schematic2.png" /></p>
-<p>Two compartments such that, as a general rule of thumb, we should need two variables. And so we write the following system of differential equations:
-$<span class="math notranslate nohighlight">\(
+<p>Two compartments such that, as a general rule of thumb, we should need two variables. And so we write the following system of differential equations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \begin{align}
 \frac{d}{dt}E(t) &amp;= \beta N(t) - \alpha E(t) \; , \\
 \frac{d}{dt}N(t) &amp;= \alpha E(t) - \beta N(t) \; .
 \end{align}
-\)</span>$</p>
-<p>However, in this case the expected total number of agents should never change since we have a <em>closed system with no self-loop</em>. The total population <span class="math notranslate nohighlight">\(P\)</span> is therefore said to be a <em>conserved quantity</em> and should always be equal to <span class="math notranslate nohighlight">\(P(t) = E(t) + N(t)\)</span>. We can convince ourselves that this population should not change since its derivative is equal to zero; which means no change! Formally, this can be written as
-$<span class="math notranslate nohighlight">\(
+\end{split}\]</div>
+<p>However, in this case the expected total number of agents should never change since we have a <em>closed system with no self-loop</em>. The total population <span class="math notranslate nohighlight">\(P\)</span> is therefore said to be a <em>conserved quantity</em> and should always be equal to <span class="math notranslate nohighlight">\(P(t) = E(t) + N(t)\)</span>. We can convince ourselves that this population should not change since its derivative is equal to zero; which means no change! Formally, this can be written as</p>
+<div class="math notranslate nohighlight">
+\[
 \begin{align}
 \frac{d}{dt}P(t) &amp;= \frac{d}{dt}E(t) + \frac{d}{dt}P(t) = 0 \; .
 \end{align}
-\)</span><span class="math notranslate nohighlight">\(
-So while our system is described by two variables, it has only one *degree of freedom*. Meaning we only need one quantity and we know the state of the entire system. If we know \)</span>E(t)<span class="math notranslate nohighlight">\(, we know that \)</span>N(t) = P - E(t)$. We therefore only need one of the two differential equations to describe the system above. But if we look at the next system, we’ll see why that doesn’t work if the population isn’t conserved</p>
+\]</div>
+<p>So while our system is described by two variables, it has only one <em>degree of freedom</em>. Meaning we only need one quantity and we know the state of the entire system. If we know <span class="math notranslate nohighlight">\(E(t)\)</span>, we know that <span class="math notranslate nohighlight">\(N(t) = P - E(t)\)</span>. We therefore only need one of the two differential equations to describe the system above. But if we look at the next system, we’ll see why that doesn’t work if the population isn’t conserved</p>
 <p><img alt="compartment_schematic3" src="../_images/schematic3.png" /></p>
-<p>We follow our general recipe and write,
-$<span class="math notranslate nohighlight">\(
+<p>We follow our general recipe and write,</p>
+<p>In general, every conserved quantity provides an opportunity to reduce the number of degrees of freedom in our system of equations.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \begin{align}
 \frac{d}{dt}E(t) &amp;= \beta N(t) - \alpha E(t) \; , \\
 \frac{d}{dt}N(t) &amp;= \alpha E(t) + \gamma N(t) - \beta N(t) \; .
 \end{align}
-\)</span><span class="math notranslate nohighlight">\(
-The population \)</span>P<span class="math notranslate nohighlight">\( now follows
-\)</span><span class="math notranslate nohighlight">\(
+\end{split}\]</div>
+<p>The population <span class="math notranslate nohighlight">\(P\)</span> now follows</p>
+<div class="math notranslate nohighlight">
+\[
 \begin{align}
-\frac{d}{dt}P(t) &amp;= \frac{d}{dt}E(t) + \frac{d}{dt}P(t) = \gamma N(t) \; .
+\frac{d}{dt}P(t) &amp;= \frac{d}{dt}E(t) + \frac{d}{dt}P(t) = \gamma N(t) \neq 0 \; .
 \end{align}
-\)</span><span class="math notranslate nohighlight">\(
-The population changes! So after we write down an equation for \)</span>E(t)<span class="math notranslate nohighlight">\(, we either need \)</span>dP(t)/dt<span class="math notranslate nohighlight">\( so that we can track \)</span>P(t)<span class="math notranslate nohighlight">\( and use \)</span>N(t) = P(t) - E(t)<span class="math notranslate nohighlight">\( or we need to directly track \)</span>N(t)$. The system therefore has two degrees of freedom since we need two quantities to fully describe its state and dynamics.</p>
-<p>In general, every conserved quantity provides an opportunity to reduce the number of degrees of freedom in our system of equations.</p>
+\]</div>
+<p>The population changes! So after we write down an equation for <span class="math notranslate nohighlight">\(E(t)\)</span>, we either need <span class="math notranslate nohighlight">\(dP(t)/dt\)</span> so that we can track <span class="math notranslate nohighlight">\(P(t)\)</span> and use <span class="math notranslate nohighlight">\(N(t) = P(t) - E(t)\)</span> or we need to directly track <span class="math notranslate nohighlight">\(N(t)\)</span>. The system therefore has two degrees of freedom since we need two quantities to fully describe its state and dynamics.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>These equations are all called <em>ordinary differential equations</em> (or ODEs) since they all depend on a single independent variable: time. We will therefore often refer to these mathematical models as system of ODEs for simplicity..</p>
@@ -444,7 +449,7 @@ $<span class="math notranslate nohighlight">\(
 \frac{d}{dt}R(t) &amp;= \gamma I(t) - \delta R(t) \; ,
 \end{align}
 \)</span><span class="math notranslate nohighlight">\(
-since the condition of a conserved population can also be used to double check any solution we get out of the system. In fact, it can also help us make sure we wrote down the equations correctly since it implies that \)</span>\frac{d}{dt}S(t) + \frac{d}{dt}E(t) + \frac{d}{dt}I(t) + \frac{d}{dt}R(t) = 0$, which we easily check in this case. In general, we can also test the validity of model runs by testing for a conserved population. But this also brings us to our next topic. How do we actually run these models?</p>
+since the condition of a conserved population can also be used to double check any solution we get out of the system. In fact, it can also help us make sure we wrote down the equations correctly since it implies that \)</span>\frac{d}{dt}S(t) + \frac{d}{dt}E(t) + \frac{d}{dt}I(t) + \frac{d}{dt}R(t) = 0$, which we can easily check in this case. In general, we can also test the validity of model runs by testing for a conserved population. But this also brings us to our next topic. How do we actually run these models?</p>
 </section>
 </section>
 
