@@ -66,7 +66,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Numerical integration" href="numerical_integration.html" />
-    <link rel="prev" title="Writing discrete models" href="discrete_models.html" />
+    <link rel="prev" title="Compartmental models" href="mf_definitions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -165,7 +165,6 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mean-field 101</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="mf_definitions.html">Compartmental models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discrete_models.html">Writing discrete models</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Writing differential equations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numerical_integration.html">Numerical integration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="simulations.html">Stochastic simulation</a></li>
@@ -390,20 +389,18 @@
 <p><img alt="compartment_schematic1" src="../_images/schematic1.png" /></p>
 <p>We can follow the dynamics of <span class="math notranslate nohighlight">\(N(t)\)</span> using the following differential equation:
 $<span class="math notranslate nohighlight">\(
-\begin{align}
-\frac{d}{dt}N(t) &amp;= \alpha - \beta N(t) \; .
-\end{align}
+\frac{d}{dt}N(t) = \alpha - \beta N(t) \; .
 \)</span><span class="math notranslate nohighlight">\(
 There is a constant input \)</span>\alpha<span class="math notranslate nohighlight">\( and a variable output \)</span>\beta N(t)<span class="math notranslate nohighlight">\(. Therefore, over a small time window \)</span>dt<span class="math notranslate nohighlight">\(, \)</span>N(t)$ will change by the difference between the input and the output. That’s it! Things can get slightly more complicated in more complicated models.</p>
 <p><img alt="compartment_schematic2" src="../_images/schematic2.png" /></p>
-<p>Two compartments so, as a general rule of thumb, we should need two variables. And so we write the following system of differential equations:
+<p>Two compartments such that, as a general rule of thumb, we should need two variables. And so we write the following system of differential equations:
 $<span class="math notranslate nohighlight">\(
 \begin{align}
 \frac{d}{dt}E(t) &amp;= \beta N(t) - \alpha E(t) \; , \\
 \frac{d}{dt}N(t) &amp;= \alpha E(t) - \beta N(t) \; .
 \end{align}
 \)</span>$</p>
-<p>However, in this case the expected total number of agents should never change and the total population <span class="math notranslate nohighlight">\(P\)</span> should always be equal to <span class="math notranslate nohighlight">\(P(t) = E(t) + N(t)\)</span>. We can convince ourselves that this population should not change since its derivative is equal to zero; which means no change! Formally, this can be written as
+<p>However, in this case the expected total number of agents should never change since we have a <em>closed system with no self-loop</em>. The total population <span class="math notranslate nohighlight">\(P\)</span> is therefore said to be a <em>conserved quantity</em> and should always be equal to <span class="math notranslate nohighlight">\(P(t) = E(t) + N(t)\)</span>. We can convince ourselves that this population should not change since its derivative is equal to zero; which means no change! Formally, this can be written as
 $<span class="math notranslate nohighlight">\(
 \begin{align}
 \frac{d}{dt}P(t) &amp;= \frac{d}{dt}E(t) + \frac{d}{dt}P(t) = 0 \; .
@@ -424,7 +421,7 @@ The population \)</span>P<span class="math notranslate nohighlight">\( now follo
 \frac{d}{dt}P(t) &amp;= \frac{d}{dt}E(t) + \frac{d}{dt}P(t) = \gamma N(t) \; .
 \end{align}
 \)</span><span class="math notranslate nohighlight">\(
-The population changes! So after we write down an equation for \)</span>E(t)<span class="math notranslate nohighlight">\(, we either need \)</span>dP(t)/dt<span class="math notranslate nohighlight">\( so that we can track \)</span>P(t)<span class="math notranslate nohighlight">\( and use \)</span>N(t) = P(t) - E(t)<span class="math notranslate nohighlight">\( or we need to directly use \)</span>N(t)$. The system therefore has two degrees of freedom since we need two quantities to fully describe its state and dynamics.</p>
+The population changes! So after we write down an equation for \)</span>E(t)<span class="math notranslate nohighlight">\(, we either need \)</span>dP(t)/dt<span class="math notranslate nohighlight">\( so that we can track \)</span>P(t)<span class="math notranslate nohighlight">\( and use \)</span>N(t) = P(t) - E(t)<span class="math notranslate nohighlight">\( or we need to directly track \)</span>N(t)$. The system therefore has two degrees of freedom since we need two quantities to fully describe its state and dynamics.</p>
 <p>In general, every conserved quantity provides an opportunity to reduce the number of degrees of freedom in our system of equations.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -482,12 +479,12 @@ since the condition of a conserved population can also be used to double check a
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="discrete_models.html"
+       href="mf_definitions.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Writing discrete models</p>
+        <p class="prev-next-title">Compartmental models</p>
       </div>
     </a>
     <a class="right-next"

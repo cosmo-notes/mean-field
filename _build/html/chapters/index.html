@@ -166,7 +166,6 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mean-field 101</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="mf_definitions.html">Compartmental models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discrete_models.html">Writing discrete models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="odes.html">Writing differential equations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numerical_integration.html">Numerical integration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="simulations.html">Stochastic simulation</a></li>
@@ -355,9 +354,9 @@
 <h1>Mean-field approximations and compartmental models<a class="headerlink" href="#mean-field-approximations-and-compartmental-models" title="Link to this heading">#</a></h1>
 <p>Mean-field approximations are the simplest way to reduce complicated properties of complex systems to simple quantities as they simply average all possible scenarios and track an expected quantity. As we will see, in most systems, mean-field approximations imply having to ignore key features of a system (heterogeneity of its parts, spatial distribution of the system) and taking unrealistic but convenient mathematical limits (infinite population size, infinite interaction rate). The resulting system is usually a highly idealized system of equations that simply follows the average (or ‘mean’) state of a continuous object (like a field) rather than a system of discrete parts. Hence, we are dealing with a ‘mean field’ or a ‘mean-field model’.</p>
 <p>Compartmental models are a useful conceptual tool to introduce along with mean-field approximations as they provide a recipe for how to build simple models and are incredibly powerful when paired with mean-field approximations. Compartmental models are simply a way of drawing maps of a system using boxes and arrows. They ask modelers to decide what parts of the system matter and what states matter for these parts. This process therefore assigns parts to compartments (boxes). Finally, we draw the transitions (arrows) between compartments to capture important mechanisms between the different parts of the system. In general, an experience modeler can directly go from a schematic of a compartmental model to a mathematical mean-field system of equations by only making a few additional assumptions.</p>
-<p>Here are some references that might be of interest in combination with this tutorial:</p>
+<p>Here are some references that might be of interest in combination with this notebook:</p>
 <ul class="simple">
-<li><p><strong><em>Chaos and Dynamical Systems</em></strong> <span id="id1">[]</span>. This is an introduction to dynamical systems and chaos theory meant for a more general audience than textbooks aimed at physicists and mathematicians.</p></li>
+<li><p><strong><em>Chaos and Dynamical Systems</em></strong> <span id="id1">[<a class="reference internal" href="#id4" title="David P Feldman. Chaos and dynamical systems. Princeton University Press, 2019.">Feldman, 2019</a>]</span>. This is an introduction to dynamical systems and chaos theory meant for a more general audience than textbooks aimed at physicists and mathematicians.</p></li>
 <li><p><strong><em>Nonlinear Dynamics and Chaos: With Applications to Physics, Biology, Chemistry, and Engineering</em></strong> <span id="id2">[<a class="reference internal" href="#id5" title="Steven H Strogatz. Nonlinear dynamics and chaos: with applications to physics, biology, chemistry, and engineering. CRC press, 2018.">Strogatz, 2018</a>]</span>. The classic textbook on systems of differential equations, nonlinear dynamics, and their interdisciplinary applications.</p></li>
 </ul>
 <p>Our main goal here is to provide a tutorial on (1) the model building steps involved in compartmental models, (2) translation of a compartmental model to a mean-field system, and (3) mathematical and computational analysis of mean-field systems of equations. As applications, we will cover classic models from the study of complex systems: species interactions and disease modeling.</p>
@@ -367,7 +366,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mean-field 101</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="mf_definitions.html">Compartmental models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discrete_models.html">Writing discrete models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="odes.html">Writing differential equations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numerical_integration.html">Numerical integration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="simulations.html">Stochastic simulation</a></li>
@@ -386,6 +384,10 @@
 <h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
 <div class="docutils container" id="id3">
 <div role="list" class="citation-list">
+<div class="citation" id="id4" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">Fel19</a><span class="fn-bracket">]</span></span>
+<p>David P Feldman. <em>Chaos and dynamical systems</em>. Princeton University Press, 2019.</p>
+</div>
 <div class="citation" id="id5" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">Str18</a><span class="fn-bracket">]</span></span>
 <p>Steven H Strogatz. <em>Nonlinear dynamics and chaos: with applications to physics, biology, chemistry, and engineering</em>. CRC press, 2018.</p>
